@@ -1,7 +1,9 @@
 <!-- src/sections/CtaBanner.vue -->
 <template>
-  <section class="px-6 md:px-12 lg:px-20 py-20 bg-blue-600">
-    <div class="max-w-3xl mx-auto text-center text-white">
+  <section class="px-6 md:px-12 lg:px-20 py-20">
+    <div
+      class="max-w-6xl mx-auto bg-blue-600 rounded-3xl px-8 md:px-16 py-16 text-center text-white"
+    >
       <h2 class="text-3xl md:text-4xl font-light mb-4">
         Stop rewriting the same components
       </h2>
