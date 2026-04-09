@@ -19,9 +19,9 @@
     <!-- Logo in center -->
     <div class="shrink-0">
       <img
-        src="../assets/snipr-logo.png"
+        src="../assets/images/snipr-trns.png"
         alt="Snipr Logo"
-        class="h-10 mx-auto"
+        class="h-20 mx-auto"
       />
     </div>
 
