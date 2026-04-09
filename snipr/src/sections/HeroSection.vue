@@ -1,9 +1,29 @@
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import heroBg from "/src/assets/images/landscape.jpg";
 
+const router = useRouter();
 const codeSnippet = ref("");
 const snippetTitle = ref("");
+
+// Check if user is logged in (you'll replace this with actual auth check)
+const isLoggedIn = () => {
+  // For now, check localStorage. Replace with your auth logic later
+  return localStorage.getItem("user") !== null;
+};
+
+const handleStartSaving = () => {
+  if (isLoggedIn()) {
+    router.push("/dashboard");
+  } else {
+    router.push("/login");
+  }
+};
+
+const goToTranslate = () => {
+  router.push("/translate");
+};
 
 const saveSnippet = () => {
   if (!codeSnippet.value.trim()) return;
@@ -33,21 +53,23 @@ const saveSnippet = () => {
     <!-- Buttons -->
     <div class="mt-8 flex gap-4">
       <button
-        class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-xl font-medium"
+        @click="handleStartSaving"
+        class="bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-xl font-medium text-white"
       >
         Start Saving
       </button>
 
       <button
-        class="border border-zinc-700 hover:border-zinc-500 px-6 py-3 rounded-xl"
+        @click="goToTranslate"
+        class="border border-zinc-700 hover:border-zinc-500 hover:text-white px-6 py-3 rounded-xl text-zinc-300"
       >
-        See Demo
+        Explore AI
       </button>
     </div>
 
     <!-- Image with code overlay -->
     <div
-      class="px-6 md:px-12 lg:px-20 mt-12 w-full relative h-64 md:h-96 lg:h-120"
+      class="px-6 md:px-12 lg:px-20 mt-12 w-full relative h-64 md:h-96 lg:h-125"
     >
       <img
         :src="heroBg"
@@ -58,7 +80,7 @@ const saveSnippet = () => {
       <!-- Code Input Overlay - Clean Glassmorphism -->
       <div class="absolute inset-0 flex items-center justify-center p-8">
         <div
-          class="bg-white/10 backdrop-blur-md rounded-xl p-6 w-full max-w-2xl shadow-2x2 border border-white/20"
+          class="bg-white/10 backdrop-blur-md rounded-xl p-6 w-full max-w-2xl shadow-2xl border border-white/20"
         >
           <!-- Header -->
           <div class="flex items-center justify-between mb-4">
@@ -67,7 +89,7 @@ const saveSnippet = () => {
               <div class="w-3 h-3 rounded-full bg-yellow-400/80"></div>
               <div class="w-3 h-3 rounded-full bg-green-400/80"></div>
             </div>
-            <span class="text-grey text-sm font-mono">New Snippet</span>
+            <span class="text-zinc-300 text-sm font-mono">New Snippet</span>
           </div>
 
           <!-- Title Input -->
@@ -75,7 +97,7 @@ const saveSnippet = () => {
             v-model="snippetTitle"
             type="text"
             placeholder="Snippet title..."
-            class="w-full bg-transparent border border-black rounded-lg px-4 py-2 mb-3 text-black placeholder:text-grey focus:outline-none focus:border-blue-400/50"
+            class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-2 mb-3 text-white placeholder:text-zinc-400 focus:outline-none focus:border-blue-400/50"
           />
 
           <!-- Code Textarea -->
@@ -83,13 +105,13 @@ const saveSnippet = () => {
             v-model="codeSnippet"
             placeholder="Paste your code here..."
             rows="6"
-            class="w-full bg-transparent border border-black rounded-lg px-4 py-3 text-black placeholder:text-grey font-mono text-sm resize-none focus:outline-none focus:border-blue-400/50"
+            class="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder:text-zinc-400 font-mono text-sm resize-none focus:outline-none focus:border-blue-400/50"
           ></textarea>
 
           <!-- Save Button -->
           <button
             @click="saveSnippet"
-            class="w-full mt-4 bg-blue-500/80 hover:bg-blue-500 px-4 py-2.5 rounded-lg font-medium transition-colors backdrop-blur-sm"
+            class="w-full mt-4 bg-blue-500/80 hover:bg-blue-500 px-4 py-2.5 rounded-lg font-medium transition-colors backdrop-blur-sm text-white"
           >
             Save Snippet
           </button>

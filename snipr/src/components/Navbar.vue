@@ -21,7 +21,7 @@
       <img
         src="../assets/images/snipr-trns.png"
         alt="Snipr Logo"
-        class="h-20 mx-auto"
+        class="h-15 mx-auto"
       />
     </div>
 
