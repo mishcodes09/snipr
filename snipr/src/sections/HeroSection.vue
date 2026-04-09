@@ -18,7 +18,9 @@ const saveSnippet = () => {
     class="min-h-screen flex flex-col items-center text-center px-6 pt-12 md:pt-16"
   >
     <!-- Heading -->
-    <h1 class="text-5xl md:text-6xl font-bold leading-tight max-w-4xl">
+    <h1
+      class="text-5xl text-[#362F2E] md:text-6xl font-bold leading-tight max-w-4xl"
+    >
       Build once.
       <span class="text-blue-500">Use everywhere.</span>
     </h1>
