@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import DashboardNavbar from "../components/DashboardNavbar.vue";
 
 const router = useRouter();
 
@@ -52,12 +53,10 @@ const handleSave = () => {
     created_at: new Date().toISOString().split("T")[0],
   };
 
-  // Save to localStorage for now - replace with Supabase later
   const existing = JSON.parse(localStorage.getItem("snippets") || "[]");
   existing.push(snippet);
   localStorage.setItem("snippets", JSON.stringify(existing));
 
-  console.log("Saved:", snippet);
   router.push("/dashboard");
 };
 
@@ -67,76 +66,92 @@ const handleCancel = () => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-zinc-950 text-white">
-    <!-- Header -->
-    <header
-      class="border-b border-zinc-800 px-6 py-4 flex items-center justify-between"
-    >
-      <div class="flex items-center gap-4">
-        <div
-          class="w-10 h-10 border-2 border-white rounded-lg flex items-center justify-center cursor-pointer hover:bg-white/10 transition-colors"
-          @click="router.push('/dashboard')"
-        >
-          <span class="font-bold text-lg">S</span>
-        </div>
-        <h1 class="text-xl font-light">New Snippet</h1>
-      </div>
-      <div class="flex items-center gap-3">
-        <button
-          @click="handleCancel"
-          class="text-zinc-400 hover:text-white px-4 py-2 text-sm transition-colors"
-        >
-          Cancel
-        </button>
-        <button
-          @click="handleSave"
-          class="bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded-lg text-sm font-medium transition-colors"
-        >
-          Save Snippet
-        </button>
-      </div>
-    </header>
+  <div class="min-h-screen bg-white text-black">
+    <DashboardNavbar />
 
-    <!-- Main Content -->
-    <main class="max-w-5xl mx-auto p-6">
-      <div class="grid gap-6">
-        <!-- Title & Meta Row -->
-        <div class="grid md:grid-cols-3 gap-4">
+    <div class="flex">
+      <!-- Sidebar - Matching Dashboard -->
+      <aside
+        class="w-64 bg-white border-r border-black h-screen sticky top-16 p-6 hidden md:block overflow-y-auto"
+      >
+        <nav class="space-y-1">
+          <button
+            @click="router.push('/dashboard')"
+            class="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-zinc-600 hover:text-black hover:bg-zinc-100 transition-colors"
+          >
+            ← Back to Dashboard
+          </button>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 p-6 md:p-12 lg:p-20">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-8">
+          <h2
+            class="text-sm font-medium tracking-widest text-zinc-500 uppercase"
+          >
+            Create a New Snippet
+          </h2>
+          <div class="flex items-center gap-3">
+            <button
+              @click="handleCancel"
+              class="text-zinc-600 hover:text-black px-4 py-2 text-sm font-medium transition-colors border border-zinc-300 hover:border-black rounded-lg"
+            >
+              Cancel
+            </button>
+            <button
+              @click="handleSave"
+              class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors"
+            >
+              Save Snippet
+            </button>
+          </div>
+        </div>
+
+        <!-- Form Grid - Matching Dashboard/SnippetsGrid style -->
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 gap-px bg-black border border-black rounded-lg overflow-hidden"
+        >
           <!-- Title -->
-          <div class="md:col-span-2">
-            <label class="block text-sm text-zinc-400 mb-2"
+          <div class="bg-white p-6">
+            <label
+              class="block text-sm text-zinc-500 uppercase tracking-wider mb-2"
               >Snippet Title *</label
             >
             <input
               v-model="title"
               type="text"
               placeholder="e.g., Responsive Navigation Bar"
-              class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:border-blue-500 transition-colors"
+              class="w-full bg-zinc-50 border border-black rounded-lg px-4 py-3 text-black placeholder-zinc-400 focus:outline-none focus:border-blue-500 transition-colors"
             />
           </div>
 
           <!-- Framework -->
-          <div>
-            <label class="block text-sm text-zinc-400 mb-2">Framework *</label>
+          <div class="bg-white p-6">
+            <label
+              class="block text-sm text-zinc-500 uppercase tracking-wider mb-2"
+              >Framework *</label
+            >
             <select
               v-model="framework"
-              class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors"
+              class="w-full bg-zinc-50 border border-black rounded-lg px-4 py-3 text-black focus:outline-none focus:border-blue-500 transition-colors"
             >
               <option v-for="fw in frameworks" :key="fw" :value="fw">
                 {{ fw }}
               </option>
             </select>
           </div>
-        </div>
 
-        <!-- Category & Tags Row -->
-        <div class="grid md:grid-cols-2 gap-4">
           <!-- Category -->
-          <div>
-            <label class="block text-sm text-zinc-400 mb-2">Category *</label>
+          <div class="bg-white p-6">
+            <label
+              class="block text-sm text-zinc-500 uppercase tracking-wider mb-2"
+              >Category *</label
+            >
             <select
               v-model="category"
-              class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors"
+              class="w-full bg-zinc-50 border border-black rounded-lg px-4 py-3 text-black focus:outline-none focus:border-blue-500 transition-colors"
             >
               <option v-for="cat in categories" :key="cat" :value="cat">
                 {{ cat }}
@@ -145,81 +160,78 @@ const handleCancel = () => {
           </div>
 
           <!-- Tags -->
-          <div>
-            <label class="block text-sm text-zinc-400 mb-2"
-              >Tags (comma separated)</label
+          <div class="bg-white p-6">
+            <label
+              class="block text-sm text-zinc-500 uppercase tracking-wider mb-2"
+              >Tags</label
             >
             <input
               v-model="tags"
               type="text"
               placeholder="e.g., responsive, dark-mode, animated"
-              class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:border-blue-500 transition-colors"
+              class="w-full bg-zinc-50 border border-black rounded-lg px-4 py-3 text-black placeholder-zinc-400 focus:outline-none focus:border-blue-500 transition-colors"
             />
           </div>
-        </div>
 
-        <!-- Description -->
-        <div>
-          <label class="block text-sm text-zinc-400 mb-2">Description</label>
-          <textarea
-            v-model="description"
-            rows="2"
-            placeholder="Brief description of what this snippet does..."
-            class="w-full bg-zinc-900 border border-zinc-800 rounded-lg px-4 py-3 text-white placeholder-zinc-600 focus:outline-none focus:border-blue-500 transition-colors resize-none"
-          ></textarea>
-        </div>
-
-        <!-- Code Editor -->
-        <div>
-          <div class="flex items-center justify-between mb-2">
-            <label class="block text-sm text-zinc-400">Code *</label>
-            <div class="flex items-center gap-2">
-              <span class="text-xs text-zinc-500">{{ framework }}</span>
-              <button
-                @click="code = ''"
-                class="text-xs text-zinc-500 hover:text-white transition-colors"
-              >
-                Clear
-              </button>
-            </div>
+          <!-- Description - Full width -->
+          <div class="bg-white p-6 md:col-span-2">
+            <label
+              class="block text-sm text-zinc-500 uppercase tracking-wider mb-2"
+              >Description</label
+            >
+            <textarea
+              v-model="description"
+              rows="3"
+              placeholder="Brief description of what this snippet does..."
+              class="w-full bg-zinc-50 border border-black rounded-lg px-4 py-3 text-black placeholder-zinc-400 focus:outline-none focus:border-blue-500 transition-colors resize-none"
+            ></textarea>
           </div>
 
-          <div class="relative">
+          <!-- Code Editor - Full width -->
+          <div class="bg-white p-6 md:col-span-2">
+            <div class="flex items-center justify-between mb-2">
+              <label
+                class="block text-sm text-zinc-500 uppercase tracking-wider"
+                >Code *</label
+              >
+              <div class="flex items-center gap-2">
+                <span
+                  class="text-xs bg-zinc-100 text-zinc-600 px-2 py-1 rounded border border-zinc-200"
+                  >{{ framework }}</span
+                >
+                <button
+                  @click="code = ''"
+                  class="text-xs text-zinc-500 hover:text-black transition-colors"
+                >
+                  Clear
+                </button>
+              </div>
+            </div>
+
             <textarea
               v-model="code"
               rows="16"
               placeholder="Paste or type your code here..."
-              class="w-full bg-zinc-900 border border-zinc-800 rounded-lg p-4 text-sm font-mono text-zinc-300 focus:outline-none focus:border-blue-500 transition-colors resize-none"
+              class="w-full bg-zinc-50 border border-black rounded-lg p-4 text-sm font-mono text-zinc-700 focus:outline-none focus:border-blue-500 transition-colors resize-none"
               spellcheck="false"
             ></textarea>
+          </div>
 
-            <!-- Line numbers decoration -->
+          <!-- Preview - Full width, shows when code exists -->
+          <div v-if="code" class="bg-white p-6 md:col-span-2">
+            <h3 class="text-sm text-zinc-500 uppercase tracking-wider mb-2">
+              Preview
+            </h3>
             <div
-              class="absolute left-0 top-0 bottom-0 w-12 bg-zinc-900/50 border-r border-zinc-800 rounded-l-lg pointer-events-none hidden md:flex flex-col items-center pt-4"
+              class="bg-zinc-100 rounded-lg p-4 overflow-x-auto border border-black"
             >
-              <span
-                v-for="n in 16"
-                :key="n"
-                class="text-xs text-zinc-600 leading-6"
-                >{{ n }}</span
-              >
+              <pre
+                class="text-xs text-zinc-600 font-mono"
+              ><code>{{ code.slice(0, 300) }}{{ code.length > 300 ? '...' : '' }}</code></pre>
             </div>
           </div>
         </div>
-
-        <!-- Preview Card -->
-        <div
-          v-if="code"
-          class="bg-zinc-900/50 border border-zinc-800 rounded-lg p-4"
-        >
-          <h3 class="text-sm text-zinc-400 mb-2">Preview</h3>
-          <div class="bg-zinc-950 rounded-lg p-4 overflow-x-auto">
-            <pre
-              class="text-xs text-zinc-400 font-mono"
-            ><code>{{ code.slice(0, 200) }}{{ code.length > 200 ? '...' : '' }}</code></pre>
-          </div>
-        </div>
-      </div>
-    </main>
+      </main>
+    </div>
   </div>
 </template>

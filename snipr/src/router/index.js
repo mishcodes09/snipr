@@ -5,6 +5,7 @@ import Signup from "../pages/Signup.vue";
 import Dashboard from "../pages/Dashboard.vue";
 import Translate from "../pages/Translate.vue";
 import NewSnippet from "../pages/NewSnippet.vue";
+import Settings from "../pages/Settings.vue";
 
 const routes = [
   { path: "/", component: Home },
@@ -13,6 +14,7 @@ const routes = [
   { path: "/dashboard", component: Dashboard },
   { path: "/translate", component: Translate },
   { path: "/new", component: NewSnippet },
+  { path: "/settings", component: Settings },
 ];
 
 const router = createRouter({

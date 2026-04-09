@@ -1,5 +1,8 @@
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const snippetCategories = ref([
   {
@@ -39,6 +42,10 @@ const snippetCategories = ref([
     count: 6,
   },
 ]);
+
+const goToDashboard = () => {
+  router.push("/dashboard");
+};
 </script>
 
 <template>
@@ -48,9 +55,9 @@ const snippetCategories = ref([
       <h2 class="text-sm font-medium tracking-widest text-zinc-500 uppercase">
         Components
       </h2>
-      <a
-        href="/components"
-        class="flex items-center gap-1 text-sm text-zinc-400 hover:text-white transition-colors border border-zinc-700 hover:border-zinc-500 px-4 py-2 rounded-lg"
+      <button
+        @click="goToDashboard"
+        class="flex items-center gap-1 text-sm text-zinc-600 hover:text-black transition-colors border border-zinc-300 hover:border-zinc-500 px-4 py-2 rounded-lg"
       >
         View all
         <svg
@@ -66,22 +73,22 @@ const snippetCategories = ref([
             d="M9 5l7 7-7 7"
           />
         </svg>
-      </a>
+      </button>
     </div>
 
     <!-- Grid -->
     <div
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-black border border-black/10 rounded-lg overflow-hidden"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-black border border-black rounded-lg overflow-hidden"
     >
       <a
         v-for="category in snippetCategories"
         :key="category.id"
         :href="`/components/${category.title.toLowerCase().replace(' ', '-')}`"
-        class="group bg-white p-6 hover:bg-zinc-800/50 transition-colors"
+        class="group bg-white p-6 hover:bg-zinc-50 transition-colors"
       >
         <!-- Preview Image -->
         <div
-          class="aspect-4/3 bg-zinc-800 rounded-lg mb-4 overflow-hidden border border-zinc-700 group-hover:border-zinc-600 transition-colors"
+          class="aspect-4/3 bg-zinc-100 rounded-lg mb-4 overflow-hidden border border-black group-hover:border-black transition-colors"
         >
           <img
             :src="category.previewImage"
@@ -91,9 +98,7 @@ const snippetCategories = ref([
         </div>
 
         <!-- Title & Subtitle -->
-        <h3
-          class="text-2xl font-light text-black mb-1 group-hover:text-white transition-colors"
-        >
+        <h3 class="text-2xl font-light text-black mb-1">
           {{ category.title }}
         </h3>
         <p class="text-sm text-zinc-500 italic mb-3">
@@ -101,13 +106,13 @@ const snippetCategories = ref([
         </p>
 
         <!-- Description -->
-        <p class="text-sm text-zinc-400 leading-relaxed line-clamp-3">
+        <p class="text-sm text-zinc-600 leading-relaxed line-clamp-3">
           {{ category.description }}
         </p>
 
         <!-- Count Badge -->
         <div class="mt-4 flex items-center gap-2">
-          <span class="text-xs text-zinc-500 bg-zinc-800 px-2 py-1 rounded">
+          <span class="text-xs text-zinc-600 bg-zinc-100 px-2 py-1 rounded">
             {{ category.count }} snippets
           </span>
         </div>
