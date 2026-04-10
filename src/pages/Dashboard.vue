@@ -134,7 +134,7 @@ const getFrameworkColor = (framework) => {
         <!-- Snippets Grid - Same style as landing page -->
         <div
           v-if="filteredSnippets().length > 0"
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-px bg-black border border-black rounded-lg overflow-hidden"
+          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-px bg-white border border-black rounded-lg overflow-hidden"
         >
           <div
             v-for="snippet in filteredSnippets()"
